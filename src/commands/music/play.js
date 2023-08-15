@@ -49,6 +49,12 @@ module.exports = {
             return;
         }
 
+        try{
+            console.log(queue.tracks);
+        }catch(e) {
+            console.log("ERRROR YO");
+        }
+
         await interaction.editReply({
             embeds: [embed]
         });
