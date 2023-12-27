@@ -4,8 +4,8 @@ const { YouTubeExtractor } = require('@discord-player/extractor');
 const { description } = require("./play");
 
 module.exports = {
-  name: "skip",
-  description: "Skip current track",
+  name: "queue",
+  description: "Display queued songs",
 
   callback: async (client, interaction) => {
     if(!interaction.member.voice.channel) {

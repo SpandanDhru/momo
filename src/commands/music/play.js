@@ -9,7 +9,7 @@ module.exports = {
     options: [
         {
             name: "url",
-            description: "YouTube URL for video",
+            description: "URL for song",
             type: ApplicationCommandOptionType.String,
             required: true,
         }
