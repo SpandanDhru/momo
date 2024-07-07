@@ -14,7 +14,7 @@ module.exports = {
 
     const queue = useQueue(interaction.guild.id);
 
-    if(!queue || !queue.tracks.length) {
+    if(!queue) {
       return interaction.editReply("No songs in queue");
     }
 

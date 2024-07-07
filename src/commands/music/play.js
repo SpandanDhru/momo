@@ -21,19 +21,8 @@ module.exports = {
         }
         
         const player = useMainPlayer();
-        const queue = client.player.nodes.create(interaction.guild, {
-            metadata: {
-                channel: interaction.channel,
-                client: interaction.guild.members.me,
-                requestedBy: interaction.user,
-            },
-            selfDeaf: true,
-            volume: 80,
-            leaveOnEmpty: true,
-            leaveOnEmptyCooldown: 300000,
-            leaveOnEnd: true,
-            leaveOnEndCooldown: 300000,
-        });
+        const queue = useQueue(interaction.guild.id);
+
         let query = interaction.options.getString("url")
 
         let embed = new EmbedBuilder();
@@ -50,8 +39,6 @@ module.exports = {
             return interaction.editReply("No results");
 
         if (result.playlist) {
-            result.tracks.forEach(track => queue.addTrack(track));
-
             embed
                 .setDescription(`**${result.tracks.length} songs from [${result.playlist.title}](${result.playlist.url})** have been added to the Queue`)
                 .setThumbnail(result.playlist.thumbnail);
