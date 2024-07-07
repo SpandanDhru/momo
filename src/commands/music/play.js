@@ -41,7 +41,7 @@ module.exports = {
         if (result.playlist) {
             embed
                 .setDescription(`**${result.tracks.length} songs from [${result.playlist.title}](${result.playlist.url})** have been added to the Queue`)
-                .setThumbnail(result.playlist.thumbnail);
+                .setThumbnail(result.tracks[0].thumbnail);
             
         }else {
             const song = result.tracks[0];

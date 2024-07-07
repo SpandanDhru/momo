@@ -19,7 +19,7 @@ module.exports = {
       return interaction.editReply("No songs in queue");
     }
 
-    queue.tracks.shuffle()
+    queue.tracks.shuffle();
     await interaction.editReply("shuffle");
 
   },
