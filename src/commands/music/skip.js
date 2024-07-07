@@ -5,7 +5,7 @@ const { description } = require("./play");
 
 module.exports = {
   name: "skip",
-  description: "Skip current track",
+  description: "skip to the next track",
 
   callback: async (client, interaction) => {
     if(!interaction.member.voice.channel) {
@@ -14,14 +14,17 @@ module.exports = {
 
     const queue = useQueue(interaction.guild.id);
 
-    if(!queue) {
+    if(!queue || !queue.tracks.length) {
       return interaction.editReply("No songs in queue");
     }
 
-    queue.node.skip();
-
-    await interaction.editReply("Skipped");
-
+    try {
+      queue.node.skip();
+      await interaction.editReply("we skip yo");
+    } catch (error) {
+      console.error(error);
+      return interaction.editReply("error due to skip yo");
+    }
 
   },
 };

@@ -18,10 +18,11 @@ module.exports = {
       return interaction.editReply("No songs in queue");
     }
 
-    queue.node.skip();
-
-    await interaction.editReply("Skipped");
-
-
+    if(queue) {
+      await interaction.editReply("songs in queue...\n" + queue.tracks.map((song, index) => (index + 1).toString() + " : " + song.title).join('\n'));
+    }else {
+      await interaction.editReply("queue is empty");
+    }
+    
   },
 };
