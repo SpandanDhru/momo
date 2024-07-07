@@ -18,7 +18,13 @@ module.exports = {
       return interaction.editReply("No songs in queue");
     }
 
-    queue.delete();
+    try{
+      queue.delete();
+    }catch(error) {
+      console.error(error);
+      return interaction.editReply("error due to delete yo");
+    }
+    
     await interaction.editReply("BYE FRIEND");
 
 
