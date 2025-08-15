@@ -6,6 +6,15 @@ const { description } = require("./play");
 module.exports = {
   name: "skip",
   description: "skip to the next track",
+  options: [
+    {
+        name: "id",
+        description: "song id to skip",
+        type: ApplicationCommandOptionType.Integer,
+        required: false,
+    }
+  ],
+
 
   callback: async (client, interaction) => {
     if(!interaction.member.voice.channel) {
@@ -19,27 +28,30 @@ module.exports = {
     }
 
     try {
-      queue.node.skip();
-      await interaction.editReply("we skip yo");
+      let query = interaction.options.getInteger("id");
 
-      const currentSong = queue.currentTrack;
+      if (query !== null && !isNaN(query)) {
+        songIndex = query - 1;
 
-      if(!currentSong) {
-        return interaction.editReply("no songs in queue yo");
+        if (songIndex >= 0 && songIndex < queue.getSize()) {
+          const trackToSkipTo = queue.tracks.toArray()[songIndex];
+          const success = queue.node.jump(trackToSkipTo);
+
+          if (success) {
+            await interaction.editReply("we skip yo");
+            await interaction.editReply(`Skipped to song at position ${query}.`);
+          }else {
+            await interaction.editReply("Failed to skip to the song.");
+          }
+
+        }else {
+          await interaction.editReply("Invalid Song ID");
+        }
+
       }else {
-        let embed = new EmbedBuilder();
-        embed
-          .setTitle("Now Playing")
-          .setDescription(`**[${currentSong.title}](${currentSong.url})**`)
-          .setThumbnail(currentSong.thumbnail)
-          .setColor("#ff0000");
-
-          await interaction.editReply({
-            embeds: [embed]
-        });
+        await interaction.editReply("we skip yo");
+        queue.node.skip();
       }
-
-
 
     } catch (error) {
       console.error(error);

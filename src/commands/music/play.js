@@ -1,6 +1,7 @@
 const { ApplicationCommandOptionType, EmbedBuilder, BaseEmbed, ErrorEmbed } = require("discord.js");
 const { useQueue, useMainPlayer, QueryType } = require("discord-player")
-const { YouTubeExtractor, SpotifyExtractor } = require('@discord-player/extractor');
+const { SpotifyExtractor } = require('@discord-player/extractor');
+const { YoutubeiExtractor } = require("discord-player-youtubei");
 
 
 module.exports = {
@@ -26,9 +27,6 @@ module.exports = {
         let query = interaction.options.getString("url")
 
         let embed = new EmbedBuilder();
-
-        await client.player.extractors.register(YouTubeExtractor, {});
-        await client.player.extractors.register(SpotifyExtractor, {});
 
         const result = await client.player.search(query, {
             requestedBy: interaction.user,
@@ -59,6 +57,17 @@ module.exports = {
                 },
             });
 
+            if (!player.events.listeners("playerStart").length) {
+                player.events.on("playerStart", (queue, track) => {
+                    const nowPlayingEmbed = new EmbedBuilder()
+                        .setTitle("Now Playing 🎶")
+                        .setDescription(`**[${track.title}](${track.url})**`)
+                        .setThumbnail(track.thumbnail)
+                        .setFooter({ text: `Requested by: ${track.requestedBy.username}` });
+
+                    queue.metadata.send({ embeds: [nowPlayingEmbed] });
+                });
+            }
         } catch (error) {
             console.log(`Something went wrong: ${error.message}`);
             return;
@@ -70,5 +79,4 @@ module.exports = {
         
     },
 };
-
 

@@ -14,14 +14,33 @@ module.exports = {
 
     const queue = useQueue(interaction.guild.id);
 
-    if(!queue) {
-      return interaction.editReply("No songs in queue");
-    }
+    if (!queue || (!queue.currentTrack && queue.tracks.length === 0)) {
+      const emptyEmbed = new EmbedBuilder()
+            .setTitle("Current Queue")
+            .setDescription("The queue is empty.")
+            .setFooter({ text: `Requested by ${interaction.user.tag}` }); // add the footer here.
 
-    if(queue) {
-      await interaction.editReply("songs in queue...\n" + queue.tracks.map((song, index) => (index + 1).toString() + " : " + song.title).join('\n'));
+      return interaction.editReply({ embeds: [emptyEmbed] });
     }else {
-      await interaction.editReply("queue is empty");
+      
+      const currentTrack = queue.currentTrack;
+      let embed = new EmbedBuilder()
+        .setTitle("Current Queue")
+        .setDescription(`**Now Playing:** [${currentTrack.title}](${currentTrack.url})\nDuration: ${currentTrack.duration}`)
+        .setThumbnail(currentTrack.thumbnail)
+        .setFooter({ text: `Requested by ${currentTrack.requestedBy.tag}` });
+
+      if (queue) {
+        embed.addFields({
+          name: "Up Next",
+          value: queue.tracks.map((song, index) => (index + 1).toString() + " : " + song.title).join('\n')
+        });
+      } else {
+        embed.addFields({ name: "Up Next", value: "No more songs in the queue." });
+      }
+
+      await interaction.editReply({ embeds: [embed] });
+
     }
     
   },
