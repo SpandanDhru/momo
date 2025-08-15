@@ -44,11 +44,11 @@ A feature-rich music bot for Discord built with **JavaScript**, **Node.js**, and
    npm install discord-player-youtubei
    ```
    
-3. Create a **.env** file in the root directory and add:
+3. Create a **.env** file in the src directory and add:
    ```bash
    TOKEN=your_discord_bot_token
    ```
-4. Edit the **configure.json** file and fill the fields
+4. Create a **configure.json** file in the root directory and fill the fields
    ```bash
    { "testServer": "testServer", "clientId": "clientId", "devs": ["dev"] }
    ```
