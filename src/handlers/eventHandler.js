@@ -8,13 +8,17 @@ module.exports = (client) => {
     const eventFiles = getAllFiles(eventFolder);
     eventFiles.sort((a, b) => a > b);
 
-    const eventName = eventFolder.replace(/\\/g, '/').split('/').pop();
+    let eventName = eventFolder.replace(/\\/g, '/').split('/').pop();
+
+    if (eventName === "ready") {
+      eventName = "clientReady";
+    }
 
     client.on(eventName, async (arg) => {
-        for (const eventFile of eventFiles) {
-            const eventFunction = require(eventFile);
-            await eventFunction(client, arg);
-        }
+      for (const eventFile of eventFiles) {
+        const eventFunction = require(eventFile);
+        await eventFunction(client, arg);
+      }
     });
   }
 };
