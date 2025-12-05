@@ -1,7 +1,5 @@
 const { ApplicationCommandOptionType, EmbedBuilder } = require("discord.js");
-const { useQueue, useMainPlayer } = require("discord-player")
-const { YouTubeExtractor } = require('@discord-player/extractor');
-const { description } = require("./play");
+const { useQueue, useMainPlayer } = require("discord-player");
 
 module.exports = {
   name: "endloop",

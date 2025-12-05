@@ -6,7 +6,7 @@ module.exports = {
   callback: (client, interaction) => {
     const embed = new EmbedBuilder()
       .setTitle("Momo Bot Commands")
-      .setDescription("Here’s a list of available commands and what they do:")
+      .setDescription("Here's a list of available commands and what they do:")
       .setColor("#FFD700")
       .addFields(
         { name: "Music Commands", value: 

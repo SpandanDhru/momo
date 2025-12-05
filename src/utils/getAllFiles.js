@@ -1,8 +1,7 @@
-const { dir } = require("console");
-const fs = require("fs")
-const path = require("path")
+const fs = require("fs");
+const path = require("path");
 
-module.exports = (directory, folderOnly=false) => {
+module.exports = function getAllFiles(directory, folderOnly = false) {
     let fileNames = [];
 
     const files = fs.readdirSync(directory, { withFileTypes: true });

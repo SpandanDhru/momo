@@ -1,5 +1,5 @@
 const { ApplicationCommandOptionType, EmbedBuilder, BaseEmbed, ErrorEmbed } = require("discord.js");
-const { useQueue, useMainPlayer, QueryType } = require("discord-player")
+const { useQueue, useMainPlayer, QueryType } = require("discord-player");
 const { SpotifyExtractor } = require('@discord-player/extractor');
 const { YoutubeiExtractor } = require("discord-player-youtubei");
 
